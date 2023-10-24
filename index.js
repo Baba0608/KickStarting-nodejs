@@ -1,10 +1,9 @@
-const student = {
-  name: "Abcd",
-  age: 22,
+const http = require("http");
 
-  greet() {
-    console.log("Hi, this is", this.name);
-  },
-};
+const server = http.createServer((request, response) => {
+  response.end("Baba fakruddin");
+});
 
-student.greet();
+server.listen(4000, "127.0.0.1", () => {
+  console.log("Listening to requests on port 4000");
+});
