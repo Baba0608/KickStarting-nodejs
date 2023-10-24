@@ -1,31 +1,45 @@
-function createOrder() {
+function a() {
+  return new Promise((resolve, reject) => {
+    console.log("a");
+    resolve();
+  });
+}
+
+function b() {
+  return new Promise((resolve, reject) => {
+    console.log("b");
+    resolve();
+  });
+}
+
+function c() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log("Order created");
-      resolve(100);
+      console.log("c");
+      resolve();
     }, 3000);
   });
 }
 
-function makePayment(id) {
+function d() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log(`Id ${id} , proceed for payment`);
-      resolve("success");
-    }, 2000);
-  });
-}
-
-function finalStatus(flag) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log(flag);
+      console.log("d");
       resolve();
-    }, 1000);
+    }, 0);
   });
 }
 
-createOrder()
+function e() {
+  return new Promise((resolve, reject) => {
+    console.log("e");
+    resolve();
+  });
+}
+
+a()
   .then((res) => res)
-  .then((res) => makePayment(res))
-  .then((res) => finalStatus(res));
+  .then(() => b())
+  .then(() => c())
+  .then(() => d())
+  .then(() => e());
