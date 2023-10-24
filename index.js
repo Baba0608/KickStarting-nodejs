@@ -1,3 +1,10 @@
-const product = (a, b) => a * b;
+const student = {
+  name: "Abcd",
+  age: 22,
 
-console.log(product(2, 3));
+  greet() {
+    console.log("Hi, this is", this.name);
+  },
+};
+
+student.greet();
