@@ -1,9 +1,31 @@
-const http = require("http");
+function createOrder() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("Order created");
+      resolve(100);
+    }, 3000);
+  });
+}
 
-const server = http.createServer((request, response) => {
-  response.end("Baba fakruddin");
-});
+function makePayment(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(`Id ${id} , proceed for payment`);
+      resolve("success");
+    }, 2000);
+  });
+}
 
-server.listen(4000, "127.0.0.1", () => {
-  console.log("Listening to requests on port 4000");
-});
+function finalStatus(flag) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(flag);
+      resolve();
+    }, 1000);
+  });
+}
+
+createOrder()
+  .then((res) => res)
+  .then((res) => makePayment(res))
+  .then((res) => finalStatus(res));
