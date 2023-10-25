@@ -1,45 +1,19 @@
-function a() {
-  return new Promise((resolve, reject) => {
-    console.log("a");
-    resolve();
-  });
-}
+const http = require("http");
 
-function b() {
-  return new Promise((resolve, reject) => {
-    console.log("b");
-    resolve();
-  });
-}
+const server = http.createServer((request, response) => {
+  const pathName = request.url;
 
-function c() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log("c");
-      resolve();
-    }, 3000);
-  });
-}
+  if (pathName === "/" || pathName === "/node") {
+    response.end("Welcome to my Node Js project");
+  } else if (pathName === "/home") {
+    response.end("Welcome home");
+  } else if (pathName === "/about") {
+    response.end("Welcome to About Us page");
+  } else {
+    response.end("Page not found");
+  }
+});
 
-function d() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log("d");
-      resolve();
-    }, 0);
-  });
-}
-
-function e() {
-  return new Promise((resolve, reject) => {
-    console.log("e");
-    resolve();
-  });
-}
-
-a()
-  .then((res) => res)
-  .then(() => b())
-  .then(() => c())
-  .then(() => d())
-  .then(() => e());
+server.listen(4000, "127.0.0.1", () => {
+  console.log("Listening to requests on port 4000");
+});
