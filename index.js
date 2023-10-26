@@ -1,16 +1,36 @@
 const http = require("http");
+const fs = require("fs");
 
-const server = http.createServer((request, response) => {
-  const pathName = request.url;
+const form = fs.readFileSync("./index.html", "utf-8");
 
-  if (pathName === "/" || pathName === "/node") {
-    response.end("Welcome to my Node Js project");
-  } else if (pathName === "/home") {
-    response.end("Welcome home");
-  } else if (pathName === "/about") {
-    response.end("Welcome to About Us page");
-  } else {
-    response.end("Page not found");
+const server = http.createServer((req, res) => {
+  const pathName = req.url;
+  const method = req.method;
+
+  if (pathName === "/") {
+    const data = fs.readFileSync("./dataFile.txt", "utf-8");
+    res.writeHead(200, {
+      "content-type": "text/html",
+    });
+    res.write(data);
+    res.end(form);
+  }
+
+  if (pathName === "/message" && method === "POST") {
+    const messageList = [];
+    req.on("data", (chunk) => {
+      messageList.push(chunk);
+    });
+
+    req.on("end", () => {
+      const parsedBody = Buffer.concat(messageList).toString();
+      const messageData = parsedBody.split("=")[1];
+      fs.writeFileSync("./dataFile.txt", messageData, "utf-8");
+    });
+
+    res.statusCode = 302;
+    res.setHeader("Location", "/");
+    res.end();
   }
 });
 
